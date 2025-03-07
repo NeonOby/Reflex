@@ -22,8 +22,19 @@ namespace Reflex.Core
             {
                 installers[i].InstallBindings(containerBuilder);
             }
-
+            
+            BindComponents(containerBuilder);
+            
             ReflexLogger.Log($"SceneScope ({gameObject.scene.name}) Bindings Installed", LogLevel.Info, gameObject);
+        }
+
+        private void BindComponents(ContainerBuilder containerBuilder)
+        {
+            var components = FindObjectsOfType<ComponentBinder>(true);
+            foreach (var component in components)
+            {
+                component.Bind(containerBuilder);
+            }
         }
     }
 }
